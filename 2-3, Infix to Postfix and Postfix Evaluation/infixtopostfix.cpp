@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include<stdlib.h>      /* for exit() */
 #include<ctype.h>     /* for isdigit(char ) */
