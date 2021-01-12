@@ -84,7 +84,7 @@ int main() {
 }
 
 void print_queue(deque *dq) {
-    printf("<----- Current Queue Details ----->\n");
+    printf("\n<----- Current Queue Details ----->\n");
     printf("Rear: %d, Front: %d\n", dq->rear, dq->front);
     printf("Size: %d\n", dq->max);
     if (empty(dq)){
@@ -101,7 +101,7 @@ void print_queue(deque *dq) {
     }
 
 
-    printf("\n<--------- End Of Details --------->\n");
+    printf("<--------- End Of Details --------->\n\n");
 }
 
 void initialize(deque *q) {
