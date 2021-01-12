@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node {
+struct Node {
     int data;
-    struct node *next;
+    struct Node *next;
 };
 
 void insert_begin(int);
@@ -11,22 +11,28 @@ void insert_end(int);
 void traverse();
 void delete_begin();
 void delete_end();
+void insert_after_k(int, int);
+void delete_k(int);
 
 int count = 0;
-struct node *start = NULL;
+struct Node *start = NULL;
 
 int main() {
-    int option, element;
+    int option, element, key;
+
+    printf("<-------------- Menu Starts Here -------------->\n"
+           "Press 1: To insert node at the very beginning\n"
+           "Press 2: To insert node at the very end\n"
+           "Press 3: To delete node at the very beginning\n"
+           "Press 4: To delete node at the very end\n"
+           "Press 5: To insert node after a value\n"
+           "Press 6: To delete node with value\n"
+           "Press 7: To traverse through the linked list\n"
+           "Press 8: Exit Program\n"
+           "<--------------- Menu Ends Here --------------->\n");
 
     for(;;){
-        printf("Press 1: To insert node at the very beginning\n"
-               "Press 2: To insert node at the very end\n"
-               "Press 3: To delete node at the very beginning\n"
-               "Press 4: To delete node at the very end\n"
-               "Press 5: To traverse through the linked list\n"
-               "Press 6: Exit Program\n"
-               "Option: ");
-
+        printf("Select Option: ");
         scanf("%d", &option);
 
         if(option == 1){
@@ -42,8 +48,19 @@ int main() {
         }else if(option==4){
             delete_end();
         }else if(option==5){
+            printf("Enter the value to add: ");
+            scanf("%d", &element);
+            printf("Enter a element after which insertion is to be performed: ");
+            scanf("%d", &key);
+            insert_after_k(key, element);
+        }else if(option==6){
+            printf("Enter the data which is to be removed from the linked list: ");
+            scanf("%d", &key);
+
+            delete_k(key);
+        }else if(option==7){
             traverse();
-        }else if(option == 6){
+        }else if(option == 8){
             break;
         }else{
             printf("Please enter a valid Input.\n");
@@ -52,8 +69,7 @@ int main() {
 }
 
 void traverse(){
-    struct node *t;
-
+    struct Node *t;
     t = start;
 
     if (t == NULL) {
@@ -75,8 +91,8 @@ void traverse(){
 }
 
 void insert_begin(int value){
-    struct node *t;
-    t = (struct node*)malloc(sizeof(struct node));
+    struct Node *t;
+    t = (struct Node*)malloc(sizeof(struct Node));
     t->data = value;
     count++;
 
@@ -85,15 +101,14 @@ void insert_begin(int value){
         start->next = NULL;
         return;
     }
-
     t->next = start;
     start = t;
 }
 
 void insert_end(int value){
-    struct node *t, *temp;
+    struct Node *t, *temp;
 
-    t = (struct node*)malloc(sizeof(struct node));
+    t = (struct Node*)malloc(sizeof(struct Node));
     t->data = value;
     count++;
 
@@ -113,12 +128,12 @@ void insert_end(int value){
 }
 
 void delete_begin(){
-    struct node *t;
+    struct Node *t;
     int n;
 
     if (start == NULL) {
         printf("Linked list is empty.\n");
-        return ;
+        return;
     }
 
     n = start->data;
@@ -131,7 +146,7 @@ void delete_begin(){
 }
 
 void delete_end() {
-    struct node *t, *u;
+    struct Node *t, *u;
     int n;
     if (start == NULL) {
         printf("Linked list is empty.\n");
@@ -157,4 +172,51 @@ void delete_end() {
     u->next = NULL;
     free(t);
     printf("%d deleted from end successfully.\n", n);
+}
+
+void insert_after_k(int key, int value){
+    struct Node *temp, *insert_node;
+    temp = start;
+    insert_node = (struct Node*)malloc(sizeof(struct Node));
+    insert_node->data = value;
+
+    if (start==NULL){
+        printf("This is an empty Linked List. \nInsertion Failed (Node not found)");
+        return;
+    }
+
+    while (temp->data != key && temp!=NULL){
+        printf("Here %d\n", temp->data);
+        temp = temp->next;
+    }
+
+
+    if (temp==NULL){
+        printf("Cannot find any Node with value %d", key);
+        return;
+    }
+
+    insert_node->next = temp->next;
+    temp->next = insert_node;
+    count ++;
+}
+
+void delete_k(int key){
+    struct Node *delete_node, *previous_node=NULL;
+    delete_node = start;
+    printf("Reached Here\n");
+
+    while (delete_node!=NULL && delete_node->data!=key){
+        printf("While loop!\n");
+         previous_node = delete_node;
+        delete_node = delete_node->next;
+    }
+
+    if (delete_node == NULL){
+        printf("The node having value %d doesn't exist.\n", key);
+    }else{
+        previous_node->next = delete_node->next;
+        free(delete_node);
+        count--;
+    }
 }
