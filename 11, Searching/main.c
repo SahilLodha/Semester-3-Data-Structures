@@ -69,6 +69,7 @@ void linear_search(const int *a, int len, int search_value){
             printf("The search value found at position %d of the array indexed from 0.\n", i);
         }
     }
+    printf("Element not found\n");
 }
 
 void binary_search(const int *a, int end, int start, int search_value){
