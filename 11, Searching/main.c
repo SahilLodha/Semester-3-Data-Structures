@@ -72,7 +72,14 @@ void linear_search(const int *a, int len, int search_value){
 }
 
 void binary_search(const int *a, int end, int start, int search_value){
-    int mid = (int)((end-start)/2);
+    int mid = 0;
+
+    if (end!=start){
+        mid = ((end+start)/2);
+    }else{
+        printf("Element is not found in array.\n");
+        return;
+    }
 
     if(a[end]<search_value){
         printf("Element not in array\n");
@@ -88,14 +95,14 @@ void binary_search(const int *a, int end, int start, int search_value){
     if (a[mid] == search_value){
         printf("Element Found at index %d of array.\n", mid);
         return;
-    }else if(end-1 == start || end == start){
+    }else if(end-1 == start){
         printf("Element not found\n");
         return;
     }else{
         if(a[mid] < search_value){
             binary_search(a, end, mid, search_value);
         }else{
-            binary_search(a, mid, 0, search_value);
+            binary_search(a, mid, start, search_value);
         }
     }
 }
