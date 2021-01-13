@@ -88,7 +88,7 @@ void binary_search(const int *a, int end, int start, int search_value){
     if (a[mid] == search_value){
         printf("Element Found at index %d of array.\n", mid);
         return;
-    }else if(end-1 == start){
+    }else if(end-1 == start || end == start){
         printf("Element not found\n");
         return;
     }else{
