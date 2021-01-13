@@ -13,38 +13,46 @@ int main() {
     int *arr;
 
     printf("<--------- Menu Start --------->\n");
-    printf("Press 1: Linear Search\nPress 2: Binary Search\nPress 3: Exit");
+    printf("Press 0: Reinitialize array\nPress 1: Linear Search\nPress 2: Binary Search\nPress 3: Exit");
     printf("\n<---------- Menu End ---------->\n");
 
-    do {
-        printf("Enter a option from the Menu: ");
-        scanf("%d", &option);
+    printf("Enter a option from the Menu: ");
+    scanf("%d", &option);
 
-        if (option<3 && option>0){
-            printf("Enter the size of array to be created: ");
-            scanf("%d", &size);
-            arr = (int*)calloc(size, sizeof(int));
+    if (option<3 && option>=0){
+        printf("Enter the size of array to be created: ");
+        scanf("%d", &size);
+        arr = (int*)calloc(size, sizeof(int));
 
-            array_create(arr, size);
-            print_array(arr, size);
+        array_create(arr, size);
+        print_array(arr, size);
+    }
 
+    while(option!=3){
+        if (option==1){
             printf("Enter the value to search for: ");
             scanf("%d", &value);
-        }
-
-        if (option==1){
             linear_search(arr, size, value);
         }else if(option==2){
+            printf("Enter the value to search for: ");
+            scanf("%d", &value);
             bubble_sort(arr, size);
-            print_array(arr, size);
             binary_search(arr, size-1, 0, value);
         }else if(option==3){
             printf("<--------- Thank You --------->");
+        }else if(option==0){
+            printf("Enter the size of array to be created: ");
+            scanf("%d", &size);
+            arr = (int*)calloc(size, sizeof(int));
+            array_create(arr, size);
+            print_array(arr, size);
         }else{
-            printf("Enter a valid option");
+            printf("Enter a valid option\n");
         }
 
-    }while (option!=3);
+        printf("Enter a option from the Menu: ");
+        scanf("%d", &option);
+    }
 }
 
 
@@ -66,19 +74,22 @@ void linear_search(const int *a, int len, int search_value){
 void binary_search(const int *a, int end, int start, int search_value){
     int mid = (int)((end-start)/2);
 
-    if(a[end-1]<search_value){
+    if(a[end]<search_value){
         printf("Element not in array\n");
+        return;
+    }else if(a[end] == search_value){
+        printf("Found in location %d of array.\n", end);
+        return;
+    }else if(a[start] == search_value){
+        printf("Found in location %d of array.\n", start);
         return;
     }
 
     if (a[mid] == search_value){
-        printf("Element found at index %d of array\n", mid);
+        printf("Element Found at index %d of array.\n", mid);
         return;
-    }else if(a[start] == search_value){
-        printf("Element found at index %d of the array\n", start);
-        return;
-    }else if(a[end] == search_value){
-        printf("Element found at index %d of array\n", end-1);
+    }else if(end-1 == start){
+        printf("Element not found\n");
         return;
     }else{
         if(a[mid] < search_value){

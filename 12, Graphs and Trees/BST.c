@@ -129,8 +129,7 @@ void Search(int key){
     printf("Element Not Found\n");
 }
 
-int Height(struct Node *node)
-{
+int Height(struct Node *node){
     int x,y;
     if(node == NULL)return 0;
     x=Height(node->left);
@@ -139,24 +138,21 @@ int Height(struct Node *node)
 }
 
 
-struct Node *InPre(struct Node *node)
-{
+struct Node *InPre(struct Node *node){
     while(node && node->right != NULL)
         node=node->right;
 
     return node;
 }
 
-struct Node *InSucc(struct Node *node)
-{
+struct Node *InSucc(struct Node *node){
     while(node && node->left != NULL)
         node=node->left;
 
     return node;
 }
 
-struct Node* Delete(struct Node *node,int key)
-{
+struct Node* Delete(struct Node *node,int key){
     struct Node *q;
 
     if(node==NULL)
