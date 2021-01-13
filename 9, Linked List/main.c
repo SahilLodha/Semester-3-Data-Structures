@@ -186,10 +186,8 @@ void insert_after_k(int key, int value){
     }
 
     while (temp->data != key && temp!=NULL){
-        printf("Here %d\n", temp->data);
         temp = temp->next;
     }
-
 
     if (temp==NULL){
         printf("Cannot find any Node with value %d", key);
@@ -204,11 +202,9 @@ void insert_after_k(int key, int value){
 void delete_k(int key){
     struct Node *delete_node, *previous_node=NULL;
     delete_node = start;
-    printf("Reached Here\n");
 
     while (delete_node!=NULL && delete_node->data!=key){
-        printf("While loop!\n");
-         previous_node = delete_node;
+        previous_node = delete_node;
         delete_node = delete_node->next;
     }
 
@@ -216,6 +212,7 @@ void delete_k(int key){
         printf("The node having value %d doesn't exist.\n", key);
     }else{
         previous_node->next = delete_node->next;
+        printf("The value %d is deleted.", delete_node->data);
         free(delete_node);
         count--;
     }
