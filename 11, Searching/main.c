@@ -67,6 +67,7 @@ void linear_search(const int *a, int len, int search_value){
     for(int i=0; i<len; i++){
         if(a[i] == search_value){
             printf("The search value found at position %d of the array indexed from 0.\n", i);
+            return;
         }
     }
     printf("Element not found\n");

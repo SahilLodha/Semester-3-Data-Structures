@@ -2,11 +2,12 @@
 #include <stdlib.h>
 
 void bubble_sort(int*, int);
-int insertion_sort(int*, int);
+void insertion_sort(int*, int);
 int quick_sort(int*, int);
 int merge_sort(int*, int);
+void selection_sort(int*, int);
 void swap(int*, int*);
-void array_print(int*, int);
+void array_print(const int*, int);
 void array_create(int*, int);
 
 int main() {
@@ -19,7 +20,10 @@ int main() {
            "Press 2: Insertion Sort\n"
            "Press 3: Quick Sort\n"
            "Press 4: Merge Sort\n"
-           "Press 5: Exit\n"
+           "Press 5: Selection Sort\n"
+           "Press 6: Shell Sort\n"
+           "Press 7: Heap Sort"
+           "Press 8: Exit\n"
            "<-------- Menu Ends -------->\n");
 
 
@@ -27,7 +31,7 @@ int main() {
         printf("Enter your Option: ");
         scanf("%d", &option);
 
-        if(option<5){
+        if(option<8){
             printf("Enter the size of the array to be sorted: ");
             scanf("%d", &size);
             ary = (int*)calloc(size, sizeof(int));
@@ -53,7 +57,13 @@ int main() {
             merge_sort(ary, size);
             printf("Final Sorted Array: \n");
             array_print(ary, size);
-        }else if (option==5){
+        }else if(option==5){
+            selection_sort(ary, size);
+        }else if(option==6){
+
+        }else if(option==7){
+
+        }else if (option==8){
             printf("\n<------------ Thank You ------------>\n");
         }else{
             printf("Please enter a valid Input\n");
@@ -69,7 +79,7 @@ void array_create(int *arr, int len){
     }
 }
 
-void array_print(int *a, int len_a){
+void array_print(const int *a, int len_a){
     for(int i = 0; i < len_a-1; i++){
         printf("%d | ", *(a+i));
     }
@@ -101,7 +111,7 @@ void bubble_sort(int *arr, int len){
     printf("The number of Iteration: %d\n", no_of_iterations);
 }
 
-int insertion_sort(int *arr, int len){
+void insertion_sort(int *arr, int len){
     for(int i = 1; i < len; i++){
         int key = arr[i];
         int j = i - 1;
@@ -120,4 +130,27 @@ int quick_sort(int *arr, int len){
 
 int merge_sort(int *arr, int len){
 
+}
+
+void heap_sort(){
+
+}
+
+void selection_sort(int *list, int len){
+    int no_of_swaps = 0, no_of_iteration=0;
+
+    printf("Running simulation for selection sort: \n");
+    for (int i=0; i<len-1; i++){
+        for(int j=i+1; j<len; j++){
+            no_of_iteration++;
+            if(list[j] < list[i]){
+                no_of_swaps++;
+                swap((list+j), (list+i));
+            }
+            array_print(list, len);
+        }
+    }
+
+    printf("The no of Iterations are: %d\n", no_of_iteration);
+    printf("The no. of swaps are: %d\n", no_of_swaps);
 }
