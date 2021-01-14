@@ -1,16 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Main Sorting Function
 void bubble_sort(int*, int);
 void insertion_sort(int*, int);
-int quick_sort(int*, int);
-int merge_sort(int*, int);
 void selection_sort(int*, int);
 void shell_sort(int*, int);
+void quick_sort(int*, int, int);
+int merge_sort(int*, int);
 
+// Supporting Functions
 void swap(int*, int*);
 void array_print(const int*, int);
 void array_create(int*, int);
+int partition(int*, int, int);
 
 int main() {
     int *ary;
@@ -52,7 +55,7 @@ int main() {
             printf("Final Sorted Array: \n");
             array_print(ary, size);
         }else if(option==3){
-            quick_sort(ary, size);
+            quick_sort(ary, 0,size);
             printf("Final Sorted Array: \n");
             array_print(ary, size);
         }else if(option==4){
@@ -61,8 +64,12 @@ int main() {
             array_print(ary, size);
         }else if(option==5){
             selection_sort(ary, size);
+            printf("Final Sorted Array: \n");
+            array_print(ary, size);
         }else if(option==6){
-
+            shell_sort(ary, size);
+            printf("Final Sorted Array: \n");
+            array_print(ary, size);
         }else if(option==7){
 
         }else if (option==8){
@@ -70,7 +77,7 @@ int main() {
         }else{
             printf("Please enter a valid Input\n");
         }
-    }while(option!=5);
+    }while(option!=8);
 
 }
 
@@ -93,6 +100,21 @@ void swap(int *a, int *b){
     temp = *a;
     *a = *b;
     *b = temp;
+}
+
+int partition(int* list, int start, int end){
+    int pivot = list[start];
+    int i = start, j = end;
+
+    do{
+        do{i++;}while (list[i]<=pivot);
+        do{j--;}while (list[j]>pivot);
+
+        if(i<j)swap(list+i, list+j);
+    }while (i<j);
+
+    swap(list+j, list+start);
+    return j;
 }
 
 void bubble_sort(int *arr, int len){
@@ -133,8 +155,14 @@ void insertion_sort(int *arr, int len){
     printf("The no of iterations are %d\n", no_of_iterations);
 }
 
-int quick_sort(int *arr, int len){
+void quick_sort(int *arr, int start, int end){
+    int partition_index;
 
+    if(start<end){
+        partition_index = partition(arr, start, end);
+        quick_sort(arr, start, partition_index);
+        quick_sort(arr, partition_index+1, end);
+    }
 }
 
 int merge_sort(int *arr, int len){
