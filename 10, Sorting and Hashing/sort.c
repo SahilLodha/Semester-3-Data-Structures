@@ -81,7 +81,7 @@ int main() {
 
 void array_create(int *arr, int len){
     for(int i=0; i< len; i++){
-        printf("Enter value for element %d", i+1);
+        printf("Enter value for element %d: ", i+1);
         scanf("%d", (arr+i));
     }
 }
