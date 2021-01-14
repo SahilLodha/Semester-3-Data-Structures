@@ -6,6 +6,8 @@ void insertion_sort(int*, int);
 int quick_sort(int*, int);
 int merge_sort(int*, int);
 void selection_sort(int*, int);
+void shell_sort(int*, int);
+
 void swap(int*, int*);
 void array_print(const int*, int);
 void array_create(int*, int);
@@ -112,16 +114,23 @@ void bubble_sort(int *arr, int len){
 }
 
 void insertion_sort(int *arr, int len){
+    int no_of_iterations = 0;
+
     for(int i = 1; i < len; i++){
         int key = arr[i];
         int j = i - 1;
 
         while (key < arr[j] && j >= 0){
+            no_of_iterations++;
             arr[j+1] = arr[j];
             j -= 1;
+
         }
         arr[j+1] = key;
+        array_print(arr, len);
     }
+
+    printf("The no of iterations are %d\n", no_of_iterations);
 }
 
 int quick_sort(int *arr, int len){
@@ -130,6 +139,29 @@ int quick_sort(int *arr, int len){
 
 int merge_sort(int *arr, int len){
 
+}
+
+void shell_sort(int *list, int len){
+    int gap,i,j,temp, no_of_iteration=0;
+
+    printf("Simulating Shell Sorting: \n");
+    for(gap=len/2;gap>=1;gap/=2){
+        for(i=gap;i<len;i++){
+            temp=list[i];
+            j=i-gap;
+
+            while(j>=0 && list[j]>temp){
+                no_of_iteration++;
+                list[j+gap]=list[j];
+                j=j-gap;
+            }
+
+            list[j+gap]=temp;
+            array_print(list, len);
+        }
+    }
+
+    printf("The no. of required Iteration are %d", no_of_iteration);
 }
 
 void heap_sort(){
