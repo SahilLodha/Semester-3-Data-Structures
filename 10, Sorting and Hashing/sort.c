@@ -7,12 +7,13 @@ void insertion_sort(int*, int);
 void selection_sort(int*, int);
 void shell_sort(int*, int);
 void quick_sort(int*, int, int);
-int merge_sort(int*, int);
+void merge_sort(int*, int);
 
 // Supporting Functions
 void swap(int*, int*);
 void array_print(const int*, int);
 void array_create(int*, int);
+void merge(int*, int,int*, int,int*, int);
 int partition(int*, int, int);
 
 int main() {
@@ -27,8 +28,7 @@ int main() {
            "Press 4: Merge Sort\n"
            "Press 5: Selection Sort\n"
            "Press 6: Shell Sort\n"
-           "Press 7: Heap Sort"
-           "Press 8: Exit\n"
+           "Press 7: Exit\n"
            "<-------- Menu Ends -------->\n");
 
 
@@ -36,7 +36,7 @@ int main() {
         printf("Enter your Option: ");
         scanf("%d", &option);
 
-        if(option<8){
+        if(option<7){
             printf("Enter the size of the array to be sorted: ");
             scanf("%d", &size);
             ary = (int*)calloc(size, sizeof(int));
@@ -59,8 +59,8 @@ int main() {
             printf("Final Sorted Array: \n");
             array_print(ary, size);
         }else if(option==4){
-            merge_sort(ary, size);
-            printf("Final Sorted Array: \n");
+            merge_sort(ary,size);
+            printf("Final Sorted array:\n");
             array_print(ary, size);
         }else if(option==5){
             selection_sort(ary, size);
@@ -71,13 +71,11 @@ int main() {
             printf("Final Sorted Array: \n");
             array_print(ary, size);
         }else if(option==7){
-
-        }else if (option==8){
             printf("\n<------------ Thank You ------------>\n");
         }else{
             printf("Please enter a valid Input\n");
         }
-    }while(option!=8);
+    }while(option!=7);
 
 }
 
@@ -115,6 +113,56 @@ int partition(int* list, int start, int end){
 
     swap(list+j, list+start);
     return j;
+}
+
+void merge(int *list,int l_len, int* right, int right_len, int* left, int left_len){
+    int i = 0, j = 0, k = 0;
+    while (i<left_len && j<right_len){
+        if (left[i]<right[j]){
+            list[k] = left[i];
+            i++;
+            k++;
+        }else{
+            list[k] = right[j];
+            k++;
+            j++;
+        }
+    }
+
+    while (i<left_len){
+        list[k] = left[i];
+        i++;
+        k++;
+    }
+
+    while (j<right_len){
+        list[k] = right[j];
+        k++;
+        j++;
+    }
+}
+
+void merge_sort(int *list, int len){
+    int mid;
+    int *left, *right;
+
+    if(len<2){
+        return;
+    }
+    mid = len/2;
+    left = (int*)malloc(mid*sizeof(int));
+    right = (int*)malloc((len-mid)*sizeof(int));
+    for (int i = 0; i < mid; ++i) {
+         left[i] = list[i];
+    }
+
+    for (int i = 0; i< (len-mid); i++){
+        right[i] = list[mid+i];
+    }
+
+    merge_sort(left, mid);
+    merge_sort(right, (len-mid));
+    merge(list, len, right, (len-mid), left, mid);
 }
 
 void bubble_sort(int *arr, int len){
@@ -163,10 +211,6 @@ void quick_sort(int *arr, int start, int end){
         quick_sort(arr, start, partition_index);
         quick_sort(arr, partition_index+1, end);
     }
-}
-
-int merge_sort(int *arr, int len){
-
 }
 
 void shell_sort(int *list, int len){
